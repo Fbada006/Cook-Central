@@ -1,8 +1,11 @@
 package com.disruption.cookcentral.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Steps {
+public class Steps implements Parcelable {
 
     private int number;
 
@@ -13,6 +16,23 @@ public class Steps {
     private List<Equipment> equipment;
 
     private Length length;
+
+    public static final Creator<Steps> CREATOR = new Creator<Steps>() {
+        @Override
+        public Steps createFromParcel(Parcel in) {
+            return new Steps(in);
+        }
+
+        @Override
+        public Steps[] newArray(int size) {
+            return new Steps[size];
+        }
+    };
+
+    protected Steps(Parcel in) {
+        number = in.readInt();
+        step = in.readString();
+    }
 
     public int getNumber() {
         return this.number;
@@ -32,5 +52,16 @@ public class Steps {
 
     public Length getLength() {
         return this.length;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(number);
+        parcel.writeString(step);
     }
 }

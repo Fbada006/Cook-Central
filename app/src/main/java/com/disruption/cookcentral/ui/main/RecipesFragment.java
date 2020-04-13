@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +22,8 @@ import com.disruption.cookcentral.models.Recipe;
 public class RecipesFragment extends Fragment {
 
     private RecipesFragmentBinding mBinding;
+    private RecipesAdapter mAdapter;
+    private RecipesViewModel mRecipesViewModel;
 
     public static RecipesFragment newInstance() {
         return new RecipesFragment();
@@ -39,20 +41,25 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecipesAdapter adapter = new RecipesAdapter(this::onRecipeClick);
+        mAdapter = new RecipesAdapter(this::onRecipeClick);
         RecyclerView recyclerView = mBinding.recyclerView;
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
 
-        RecipesViewModel recipesViewModel = new ViewModelProvider(this).get(RecipesViewModel.class);
+        mRecipesViewModel = new ViewModelProvider(this).get(RecipesViewModel.class);
 
-        recipesViewModel.mRecipeResource.observe(this, recipeResponseResource -> {
+        observeViewModelForRecipes();
+        observeViewModelForNavigation();
+    }
+
+    private void observeViewModelForRecipes() {
+        mRecipesViewModel.mRecipeResource.observe(this, recipeResponseResource -> {
             switch (recipeResponseResource.status) {
                 case SUCCESS:
                     if (recipeResponseResource.data != null && !recipeResponseResource.data.getRecipes().isEmpty()) {
-                        adapter.submitList(recipeResponseResource.data.getRecipes());
+                        mAdapter.submitList(recipeResponseResource.data.getRecipes());
                         mBinding.progressBar.setVisibility(View.GONE);
                         mBinding.errorText.setVisibility(View.GONE);
                     } else {
@@ -74,7 +81,21 @@ public class RecipesFragment extends Fragment {
         });
     }
 
+    private void observeViewModelForNavigation() {
+        mRecipesViewModel.getNavigateToRecipe().observe(this, recipe -> {
+            if (recipe != null) {
+                //Then the user has clicked on a recipe so navigation is required
+                NavHostFragment.findNavController(this).navigate(
+                        RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment(recipe)
+                );
+
+                //Inform the ViewModel navigation is done to avoid triggering multiple events
+                mRecipesViewModel.displayRecipeDetailsComplete();
+            }
+        });
+    }
+
     private void onRecipeClick(Recipe recipe) {
-        Toast.makeText(requireContext(), "Clicked " + recipe.getTitle(), Toast.LENGTH_SHORT).show();
+        mRecipesViewModel.displayRecipeDetails(recipe);
     }
 }

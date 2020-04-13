@@ -5,4 +5,7 @@
     <string name="no_data_to_display">There is no data to display. Please try again</string>
     <string name="error_has_occurred">Houston…We have the following problem: %s</string>
     <string name="fragment_recipes_label">Discover Recipes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

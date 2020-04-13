@@ -9,5 +9,19 @@
         android:id="@+id/recipesFragment"
         android:name="com.disruption.cookcentral.ui.main.RecipesFragment"
         android:label="@string/fragment_recipes_label"
-        tools:layout="@layout/recipes_fragment" />
+        tools:layout="@layout/recipes_fragment">
+        <action
+            android:id="@+id/action_recipesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/detailsFragment"
+        android:name="com.disruption.cookcentral.ui.details.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="recipe"
+            app:argType="com.disruption.cookcentral.models.Recipe" />
+    </dialog>
 </navigation>

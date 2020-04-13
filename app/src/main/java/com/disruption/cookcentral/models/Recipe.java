@@ -1,8 +1,11 @@
 package com.disruption.cookcentral.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Parcelable {
     private boolean vegetarian;
 
     private boolean vegan;
@@ -50,6 +53,47 @@ public class Recipe {
     private String instructions;
 
     private List<AnalyzedInstructions> analyzedInstructions;
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+    protected Recipe(Parcel in) {
+        vegetarian = in.readByte() != 0;
+        vegan = in.readByte() != 0;
+        glutenFree = in.readByte() != 0;
+        dairyFree = in.readByte() != 0;
+        veryHealthy = in.readByte() != 0;
+        cheap = in.readByte() != 0;
+        sourceUrl = in.readString();
+        spoonacularSourceUrl = in.readString();
+        aggregateLikes = in.readInt();
+        spoonacularScore = in.readInt();
+        healthScore = in.readInt();
+        creditsText = in.readString();
+        pricePerServing = in.readDouble();
+        id = in.readInt();
+        title = in.readString();
+        readyInMinutes = in.readInt();
+        servings = in.readInt();
+        image = in.readString();
+        summary = in.readString();
+        dishTypes = in.createStringArrayList();
+        diets = in.createStringArrayList();
+        occasions = in.createStringArrayList();
+        instructions = in.readString();
+    }
+
+    public Recipe() {
+    }
 
     public boolean getVegetarian() {
         return this.vegetarian;
@@ -149,5 +193,37 @@ public class Recipe {
 
     public List<AnalyzedInstructions> getAnalyzedInstructions() {
         return this.analyzedInstructions;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByte((byte) (vegetarian ? 1 : 0));
+        parcel.writeByte((byte) (vegan ? 1 : 0));
+        parcel.writeByte((byte) (glutenFree ? 1 : 0));
+        parcel.writeByte((byte) (dairyFree ? 1 : 0));
+        parcel.writeByte((byte) (veryHealthy ? 1 : 0));
+        parcel.writeByte((byte) (cheap ? 1 : 0));
+        parcel.writeString(sourceUrl);
+        parcel.writeString(spoonacularSourceUrl);
+        parcel.writeInt(aggregateLikes);
+        parcel.writeInt(spoonacularScore);
+        parcel.writeInt(healthScore);
+        parcel.writeString(creditsText);
+        parcel.writeDouble(pricePerServing);
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeInt(readyInMinutes);
+        parcel.writeInt(servings);
+        parcel.writeString(image);
+        parcel.writeString(summary);
+        parcel.writeStringList(dishTypes);
+        parcel.writeStringList(diets);
+        parcel.writeStringList(occasions);
+        parcel.writeString(instructions);
     }
 }
