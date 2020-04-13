@@ -18,13 +18,14 @@ buildscript {
         appcompat_version = '1.2.0-beta01'
         cardview_version = "1.0.0"
         androidx_test_version = "1.1.1"
+        like_button_version = "0.2.3"
     }
 
     repositories {
         google()
         jcenter()
-        
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
         
@@ -37,7 +38,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url "https://jitpack.io" }
     }
 }
 
