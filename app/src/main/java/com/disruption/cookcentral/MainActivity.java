@@ -5,9 +5,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,12 +19,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        setUpBottomNavMenu();
+        init();
     }
 
-    private void setUpBottomNavMenu() {
+    private void init() {
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(getTopLevelDestinations()).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+    }
+
+    /**
+     * Helper method for setting the top level destinations of the navigation
+     */
+    private Set<Integer> getTopLevelDestinations() {
+        Set<Integer> topLevelDestinations = new HashSet<>();
+        topLevelDestinations.add(R.id.recipesFragment);
+        topLevelDestinations.add(R.id.favouritesFragment);
+        topLevelDestinations.add(R.id.searchFragment);
+        return topLevelDestinations;
     }
 }
