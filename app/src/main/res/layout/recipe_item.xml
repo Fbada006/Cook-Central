@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/image_of_the_recipe"
                 app:imageRecipe="@{recipe.image}"
-                tools:background="@drawable/android" />
+                tools:background="@color/colorPrimaryDark" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
