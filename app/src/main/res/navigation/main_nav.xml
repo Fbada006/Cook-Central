@@ -15,13 +15,13 @@
             app:destination="@id/detailsFragment" />
     </fragment>
 
-    <dialog
+    <fragment
         android:id="@+id/detailsFragment"
         android:name="com.disruption.cookcentral.ui.details.DetailsFragment"
-        android:label="Details"
+        android:label="@string/fragment_details_label"
         tools:layout="@layout/fragment_details">
         <argument
             android:name="recipe"
             app:argType="com.disruption.cookcentral.models.Recipe" />
-    </dialog>
+    </fragment>
 </navigation>

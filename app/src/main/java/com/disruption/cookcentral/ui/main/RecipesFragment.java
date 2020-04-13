@@ -10,8 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,8 +24,7 @@ public class RecipesFragment extends Fragment {
     private RecipesAdapter mAdapter;
     private RecipesViewModel mRecipesViewModel;
 
-    public static RecipesFragment newInstance() {
-        return new RecipesFragment();
+    public RecipesFragment() {
     }
 
     @Nullable
@@ -41,10 +39,10 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mAdapter = new RecipesAdapter(this::onRecipeClick);
         RecyclerView recyclerView = mBinding.recyclerView;
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
 
@@ -85,7 +83,7 @@ public class RecipesFragment extends Fragment {
         mRecipesViewModel.getNavigateToRecipe().observe(this, recipe -> {
             if (recipe != null) {
                 //Then the user has clicked on a recipe so navigation is required
-                NavHostFragment.findNavController(this).navigate(
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(
                         RecipesFragmentDirections.actionRecipesFragmentToDetailsFragment(recipe)
                 );
 
