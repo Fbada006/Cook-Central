@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cook Central</string>
+    <string name="recipe_time">%$d minutes</string>
+    <string name="image_of_the_recipe">Image of the recipe</string>
 </resources>
