@@ -1,6 +1,5 @@
 package com.disruption.cookcentral.ui.favs;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ public class FavouritesFragment extends Fragment {
     public FavouritesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
