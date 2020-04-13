@@ -107,6 +107,10 @@ public class Recipe {
         return this.id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return this.title;
     }

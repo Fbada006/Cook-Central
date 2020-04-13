@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Cook Central</string>
-    <string name="recipe_time">%$d minutes</string>
+    <string name="recipe_time">%d minutes</string>
     <string name="image_of_the_recipe">Image of the recipe</string>
+    <string name="no_data_to_display">There is no data to display. Please try again</string>
+    <string name="error_has_occurred">Houston…We have the following problem: %s</string>
 </resources>
