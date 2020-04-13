@@ -72,6 +72,7 @@
                         android:drawableStart="@drawable/ic_time"
                         android:fontFamily="sans-serif-condensed-light"
                         android:padding="4dp"
+                        android:drawablePadding="4dp"
                         android:text="@{@string/recipe_time(recipe.readyInMinutes)}"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"

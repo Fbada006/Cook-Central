@@ -71,4 +71,8 @@ dependencies {
 
     //Like button for favourites
     implementation "com.github.jd-alexander:LikeButton:$like_button_version"
+
+    //Navigation component
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 }
