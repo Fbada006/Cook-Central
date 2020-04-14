@@ -51,15 +51,13 @@ public class DetailsFragment extends Fragment {
             setUpStepsRecyclerViews(recipe);
         }
 
-        showAndHandleBackButton();
-
         return mBinding.getRoot();
     }
 
     private void setUpViews(Recipe recipe) {
         mBinding.tvRecipeTime.setText(requireContext().getString(R.string.recipe_time, recipe.getReadyInMinutes()));
         mBinding.tvRecipeName.setText(recipe.getTitle());
-        mBinding.tvRecipeInstructions.setText(Html.fromHtml(recipe.getInstructions()));
+        mBinding.tvRecipeInstructions.setText(Html.fromHtml(recipe.getSummary()));
         Glide.with(requireContext())
                 .load(recipe.getImage())
                 .centerCrop()
@@ -100,11 +98,5 @@ public class DetailsFragment extends Fragment {
                 mBinding.tvInstructionsError.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    private void showAndHandleBackButton() {
-//        Toolbar toolbar = mBinding.detailToolbar;
-//        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-//        toolbar.setNavigationOnClickListener(view -> Objects.requireNonNull(getActivity()).onBackPressed());
     }
 }
