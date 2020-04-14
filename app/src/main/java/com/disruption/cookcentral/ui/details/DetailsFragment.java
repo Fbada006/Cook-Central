@@ -13,10 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentDetailsBinding;
 import com.disruption.cookcentral.models.AnalyzedInstructions;
+import com.disruption.cookcentral.models.Ingredients;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.Steps;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,14 +61,20 @@ public class DetailsFragment extends Fragment {
         IngredientAdapter adapter = new IngredientAdapter();
         mBinding.rvIngredientsList.setAdapter(adapter);
         mBinding.rvIngredientsList.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        Set<Ingredients> ingredientsSet = new HashSet<>();
         for (AnalyzedInstructions instructions : recipe.getAnalyzedInstructions()) {
             for (Steps steps : instructions.getSteps()) {
                 if (steps.getIngredients() != null && !steps.getIngredients().isEmpty()) {
-                    adapter.submitList(steps.getIngredients());
-                } else {
-                    mBinding.tvIngredientsError.setVisibility(View.VISIBLE);
+                    ingredientsSet.addAll(steps.getIngredients());
                 }
             }
+        }
+
+        if (!ingredientsSet.isEmpty()) {
+            List<Ingredients> ingredients = new ArrayList<>(ingredientsSet);
+            adapter.submitList(ingredients);
+        } else {
+            mBinding.tvIngredientsError.setVisibility(View.VISIBLE);
         }
     }
 
