@@ -22,8 +22,8 @@ public class RecipeRepository {
 
     private RecipeDao mRecipeDao;
 
-    public RecipeRepository(RecipeDao movieDao) {
-        mRecipeDao = movieDao;
+    public RecipeRepository(RecipeDao recipeDao) {
+        mRecipeDao = recipeDao;
     }
 
     public static LiveData<Resource<RecipeResponse>> getRandomRecipes() {
