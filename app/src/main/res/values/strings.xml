@@ -11,4 +11,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_details_label">Details</string>
+    <string name="there_is_no_data_to_show">There is no data to show</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="image_of_the_ingredient">Image of the ingredient</string>
 </resources>

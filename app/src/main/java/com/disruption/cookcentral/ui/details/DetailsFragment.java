@@ -1,13 +1,14 @@
 package com.disruption.cookcentral.ui.details;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentDetailsBinding;
@@ -35,14 +36,46 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_details, container, false);
         if (getArguments() != null) {
-            Recipe args = DetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
-            for (AnalyzedInstructions instructions : args.getAnalyzedInstructions()) {
-                for (Steps steps : instructions.getSteps()) {
-                    Log.e(TAG, "onCreateView:================ " + steps.getStep());
-                }
-            }
+            Recipe recipe = DetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
+            setUpViews(recipe);
+            setUpIngredientsRecyclerViews(recipe);
+            setUpStepsRecyclerViews(recipe);
         }
 
         return mBinding.getRoot();
+    }
+
+    private void setUpViews(Recipe recipe) {
+        mBinding.tvRecipeTime.setText(requireContext().getString(R.string.recipe_time, recipe.getReadyInMinutes()));
+        mBinding.tvRecipeName.setText(recipe.getTitle());
+        mBinding.tvRecipeInstructions.setText(recipe.getInstructions());
+    }
+
+    private void setUpIngredientsRecyclerViews(Recipe recipe) {
+        IngredientAdapter adapter = new IngredientAdapter();
+        mBinding.rvIngredientsList.setAdapter(adapter);
+        mBinding.rvIngredientsList.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        for (AnalyzedInstructions instructions : recipe.getAnalyzedInstructions()) {
+            for (Steps steps : instructions.getSteps()) {
+                if (steps.getIngredients() != null && !steps.getIngredients().isEmpty()) {
+                    adapter.submitList(steps.getIngredients());
+                } else {
+                    mBinding.tvIngredientsError.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    private void setUpStepsRecyclerViews(Recipe recipe) {
+        StepAdapter adapter = new StepAdapter();
+        mBinding.rvInstructionsList.setAdapter(adapter);
+        mBinding.rvInstructionsList.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+        for (AnalyzedInstructions instructions : recipe.getAnalyzedInstructions()) {
+            if (instructions.getSteps() != null && !instructions.getSteps().isEmpty()) {
+                adapter.submitList(instructions.getSteps());
+            } else {
+                mBinding.tvInstructionsError.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

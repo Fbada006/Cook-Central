@@ -9,6 +9,8 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.disruption.cookcentral.R;
 
+import static com.disruption.cookcentral.utils.Constants.INGREDIENT_BASE_URL;
+
 public class BindingUtils {
 
     /**
@@ -22,7 +24,26 @@ public class BindingUtils {
             Glide.with(context)
                     .load(recipeImage)
                     .centerCrop()
-                    .placeholder(R.drawable.recipe_loading_animation)
+                    .placeholder(R.drawable.image_loading_animation)
+                    .error(R.drawable.ic_error)
+                    .into(imageView);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_error)
+                    .centerCrop()
+                    .into(imageView);
+        }
+    }
+
+    @BindingAdapter("imageIngredient")
+    public static void setIngredientImage(ImageView imageView, String ingredientImage) {
+        Context context = imageView.getContext();
+
+        if (!TextUtils.isEmpty(ingredientImage)) {
+            Glide.with(context)
+                    .load(INGREDIENT_BASE_URL + ingredientImage)
+                    .centerCrop()
+                    .placeholder(R.drawable.image_loading_animation)
                     .error(R.drawable.ic_error)
                     .into(imageView);
         } else {
