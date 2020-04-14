@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentFavouritesBinding;
-import com.disruption.cookcentral.ui.main.RecipesAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +29,7 @@ public class FavouritesFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_favourites, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false);
 
         showFavs();
 
@@ -38,7 +37,7 @@ public class FavouritesFragment extends Fragment {
     }
 
     private void showFavs() {
-        RecipesAdapter adapter = new RecipesAdapter(null);
+        CachedRecipesAdapter adapter = new CachedRecipesAdapter();
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         mBinding.recyclerView.setHasFixedSize(true);
         mBinding.recyclerView.setAdapter(adapter);

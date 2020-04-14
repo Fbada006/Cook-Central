@@ -6,7 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.disruption.cookcentral.models.Recipe;
+import com.disruption.cookcentral.models.CachedRecipe;
 
 import java.util.List;
 
@@ -14,14 +14,14 @@ import java.util.List;
 public interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
-    LiveData<List<Recipe>> loadAllFavs();
+    LiveData<List<CachedRecipe>> loadAllFavs();
 
     @Query("SELECT * FROM recipes WHERE id = :id")
-    LiveData<Recipe> loadRecipeById(int id);
+    LiveData<CachedRecipe> loadRecipeById(int id);
 
     @Insert
-    void addRecipeToFavourites(Recipe recipe);
+    void addRecipeToFavourites(CachedRecipe recipe);
 
     @Delete
-    void removeRecipeFromFavourites(Recipe recipe);
+    void removeRecipeFromFavourites(CachedRecipe recipe);
 }

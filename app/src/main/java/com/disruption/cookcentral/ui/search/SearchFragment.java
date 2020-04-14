@@ -28,7 +28,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_search, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
 
         return mBinding.getRoot();
     }

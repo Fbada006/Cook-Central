@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.disruption.cookcentral.BuildConfig;
+import com.disruption.cookcentral.models.CachedRecipe;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.RecipeResponse;
 import com.disruption.cookcentral.network.RecipeApiServiceProvider;
@@ -62,19 +63,19 @@ public class RecipeRepository {
         return mRecipeResource;
     }
 
-    public LiveData<Recipe> loadRecipeById(int recipeId) {
+    public LiveData<CachedRecipe> loadRecipeById(int recipeId) {
         return mRecipeDao.loadRecipeById(recipeId);
     }
 
-    public LiveData<List<Recipe>> getAllFavs() {
+    public LiveData<List<CachedRecipe>> getAllFavs() {
         return mRecipeDao.loadAllFavs();
     }
 
-    public void deleteRecipeFromFavs(Recipe recipe) {
+    public void deleteRecipeFromFavs(CachedRecipe recipe) {
         Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.removeRecipeFromFavourites(recipe));
     }
 
-    public void addRecipeToFavs(Recipe recipe) {
+    public void addRecipeToFavs(CachedRecipe recipe) {
         Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.addRecipeToFavourites(recipe));
     }
 }

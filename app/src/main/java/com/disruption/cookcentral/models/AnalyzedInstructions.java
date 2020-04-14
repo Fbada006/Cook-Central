@@ -35,6 +35,11 @@ public class AnalyzedInstructions implements Parcelable {
         return this.steps;
     }
 
+    public AnalyzedInstructions(String name, List<Steps> steps) {
+        this.name = name;
+        this.steps = steps;
+    }
+
     @Override
     public int describeContents() {
         return 0;

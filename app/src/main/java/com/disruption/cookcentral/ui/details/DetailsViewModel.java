@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.disruption.cookcentral.data.RecipeDatabase;
 import com.disruption.cookcentral.data.RecipeRepository;
-import com.disruption.cookcentral.models.Recipe;
+import com.disruption.cookcentral.models.CachedRecipe;
 
 public class DetailsViewModel extends AndroidViewModel {
 
@@ -19,15 +19,15 @@ public class DetailsViewModel extends AndroidViewModel {
         mRecipeRepository = new RecipeRepository(RecipeDatabase.getInstance(application).recipeDao());
     }
 
-    public void insertRecipeToFavourites(Recipe recipe) {
+    public void insertRecipeToFavourites(CachedRecipe recipe) {
         mRecipeRepository.addRecipeToFavs(recipe);
     }
 
-    public void deleteRecipeFromFavourites(Recipe recipe) {
+    public void deleteRecipeFromFavourites(CachedRecipe recipe) {
         mRecipeRepository.deleteRecipeFromFavs(recipe);
     }
 
-    public LiveData<Recipe> isRecipeInFavs(int recipeId) {
+    public LiveData<CachedRecipe> isRecipeInFavs(int recipeId) {
         return mRecipeRepository.loadRecipeById(recipeId);
     }
 }

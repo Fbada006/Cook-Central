@@ -29,6 +29,14 @@ public class Steps implements Parcelable {
         }
     };
 
+    public Steps(int number, String step, List<Ingredients> ingredients, List<Equipment> equipment, Length length) {
+        this.number = number;
+        this.step = step;
+        this.ingredients = ingredients;
+        this.equipment = equipment;
+        this.length = length;
+    }
+
     protected Steps(Parcel in) {
         number = in.readInt();
         step = in.readString();

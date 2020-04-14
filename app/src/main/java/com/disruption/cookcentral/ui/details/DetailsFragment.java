@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentDetailsBinding;
 import com.disruption.cookcentral.models.AnalyzedInstructions;
+import com.disruption.cookcentral.models.CachedRecipe;
 import com.disruption.cookcentral.models.Ingredients;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.Steps;
@@ -48,7 +49,7 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_details, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false);
         mLikeButton = mBinding.starButton;
 
         if (getArguments() != null) {
@@ -124,16 +125,29 @@ public class DetailsFragment extends Fragment {
     }
 
     private void setUpFavsListener() {
+        CachedRecipe cachedRecipe = null;
+        if (mRecipe != null) {
+            cachedRecipe = new CachedRecipe();
+            cachedRecipe.setId(mRecipe.getId());
+            cachedRecipe.setImage(mRecipe.getImage());
+            cachedRecipe.setReadyInMinutes(mRecipe.getReadyInMinutes());
+            cachedRecipe.setSummary(mRecipe.getSummary());
+            cachedRecipe.setTitle(mRecipe.getTitle());
+            cachedRecipe.setServings(mRecipe.getServings());
+        }
+
+        CachedRecipe finalCachedRecipe = cachedRecipe;
+
         mLikeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                mDetailsViewModel.insertRecipeToFavourites(mRecipe);
+                mDetailsViewModel.insertRecipeToFavourites(finalCachedRecipe);
                 Toast.makeText(getContext(), getString(R.string.add_to_favs), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mDetailsViewModel.deleteRecipeFromFavourites(mRecipe);
+                mDetailsViewModel.deleteRecipeFromFavourites(finalCachedRecipe);
                 Toast.makeText(getContext(), getString(R.string.remove_from_favs), Toast.LENGTH_SHORT).show();
             }
         });

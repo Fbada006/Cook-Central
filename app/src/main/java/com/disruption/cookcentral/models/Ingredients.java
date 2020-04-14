@@ -29,6 +29,12 @@ public class Ingredients implements Parcelable {
         image = in.readString();
     }
 
+    public Ingredients(int id, String name, String image) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+    }
+
     public int getId() {
         return this.id;
     }
