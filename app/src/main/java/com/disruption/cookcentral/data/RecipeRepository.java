@@ -12,12 +12,19 @@ import com.disruption.cookcentral.utils.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import io.reactivex.schedulers.Schedulers;
 
 public class RecipeRepository {
     private static MediatorLiveData<Resource<RecipeResponse>> mRecipeResource;
     private static final String API_KEY = BuildConfig.RecipeKey;
+
+    private RecipeDao mRecipeDao;
+
+    public RecipeRepository(RecipeDao movieDao) {
+        mRecipeDao = movieDao;
+    }
 
     public static LiveData<Resource<RecipeResponse>> getRandomRecipes() {
         if (mRecipeResource == null) {
@@ -55,4 +62,19 @@ public class RecipeRepository {
         return mRecipeResource;
     }
 
+    public LiveData<Recipe> loadRecipeById(int recipeId) {
+        return mRecipeDao.loadRecipeById(recipeId);
+    }
+
+    public LiveData<List<Recipe>> getAllFavs() {
+        return mRecipeDao.loadAllFavs();
+    }
+
+    public void deleteRecipeFromFavs(Recipe recipe) {
+        Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.removeRecipeFromFavourites(recipe));
+    }
+
+    public void addRecipeToFavs(Recipe recipe) {
+        Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.addRecipeToFavourites(recipe));
+    }
 }
