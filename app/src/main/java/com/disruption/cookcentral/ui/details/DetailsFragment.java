@@ -1,6 +1,7 @@
 package com.disruption.cookcentral.ui.details;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentDetailsBinding;
 import com.disruption.cookcentral.models.AnalyzedInstructions;
@@ -41,6 +43,7 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_details, container, false);
+
         if (getArguments() != null) {
             Recipe recipe = DetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
             setUpViews(recipe);
@@ -48,13 +51,21 @@ public class DetailsFragment extends Fragment {
             setUpStepsRecyclerViews(recipe);
         }
 
+        showAndHandleBackButton();
+
         return mBinding.getRoot();
     }
 
     private void setUpViews(Recipe recipe) {
         mBinding.tvRecipeTime.setText(requireContext().getString(R.string.recipe_time, recipe.getReadyInMinutes()));
         mBinding.tvRecipeName.setText(recipe.getTitle());
-        mBinding.tvRecipeInstructions.setText(recipe.getInstructions());
+        mBinding.tvRecipeInstructions.setText(Html.fromHtml(recipe.getInstructions()));
+        Glide.with(requireContext())
+                .load(recipe.getImage())
+                .centerCrop()
+                .placeholder(R.drawable.image_loading_animation)
+                .error(R.drawable.ic_error)
+                .into(mBinding.ivRecipeImage);
     }
 
     private void setUpIngredientsRecyclerViews(Recipe recipe) {
@@ -89,5 +100,11 @@ public class DetailsFragment extends Fragment {
                 mBinding.tvInstructionsError.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private void showAndHandleBackButton() {
+//        Toolbar toolbar = mBinding.detailToolbar;
+//        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+//        toolbar.setNavigationOnClickListener(view -> Objects.requireNonNull(getActivity()).onBackPressed());
     }
 }

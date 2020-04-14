@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@{String.valueOf(step.number)}"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
             tools:text="1" />
 
         <TextView
@@ -29,6 +30,7 @@
             android:padding="8dp"
             android:text="@{step.step}"
             android:textColor="@android:color/white"
+            android:textSize="18sp"
             tools:text="Boil the food untill you feel that it is ready and then boid it some more so that it becomes more readier" />
     </LinearLayout>
 </layout>
