@@ -1,6 +1,7 @@
 package com.disruption.cookcentral;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -11,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,10 +26,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(getTopLevelDestinations()).build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.detailsFragment) {
+                Objects.requireNonNull(getSupportActionBar()).hide();
+                bottomNavigationView.setVisibility(View.GONE);
+            }
+        });
     }
 
     /**
