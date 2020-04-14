@@ -5,9 +5,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,8 @@ import com.disruption.cookcentral.models.AnalyzedInstructions;
 import com.disruption.cookcentral.models.Ingredients;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.Steps;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +36,9 @@ import java.util.Set;
 public class DetailsFragment extends Fragment {
 
     private FragmentDetailsBinding mBinding;
+    private LikeButton mLikeButton;
+    private Recipe mRecipe;
+    private DetailsViewModel mDetailsViewModel;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -42,12 +49,19 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_details, container, false);
+        mLikeButton = mBinding.starButton;
 
         if (getArguments() != null) {
-            Recipe recipe = DetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
-            setUpViews(recipe);
-            setUpIngredientsRecyclerViews(recipe);
-            setUpStepsRecyclerViews(recipe);
+            mRecipe = DetailsFragmentArgs.fromBundle(getArguments()).getRecipe();
+            setUpViews(mRecipe);
+            setUpIngredientsRecyclerViews(mRecipe);
+            setUpStepsRecyclerViews(mRecipe);
+
+            DetailsViewModelFactory factory = new DetailsViewModelFactory(requireActivity().getApplication());
+            mDetailsViewModel = new ViewModelProvider(this, factory).get(DetailsViewModel.class);
+
+            setUpFavsListener();
+            observeLikedState();
         }
 
         return mBinding.getRoot();
@@ -97,5 +111,31 @@ public class DetailsFragment extends Fragment {
                 mBinding.tvInstructionsError.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private void observeLikedState() {
+        mDetailsViewModel.isRecipeInFavs(mRecipe.getId()).observe(this, recipe -> {
+            if (recipe != null) {
+                mLikeButton.setLiked(true);
+            } else {
+                mLikeButton.setLiked(false);
+            }
+        });
+    }
+
+    private void setUpFavsListener() {
+        mLikeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                mDetailsViewModel.insertRecipeToFavourites(mRecipe);
+                Toast.makeText(getContext(), getString(R.string.add_to_favs), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                mDetailsViewModel.deleteRecipeFromFavourites(mRecipe);
+                Toast.makeText(getContext(), getString(R.string.remove_from_favs), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

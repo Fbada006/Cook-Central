@@ -78,6 +78,30 @@ public class Recipe implements Parcelable {
         return this.summary;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setReadyInMinutes(int readyInMinutes) {
+        this.readyInMinutes = readyInMinutes;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setAnalyzedInstructions(List<AnalyzedInstructions> analyzedInstructions) {
+        this.analyzedInstructions = analyzedInstructions;
+    }
+
     public List<AnalyzedInstructions> getAnalyzedInstructions() {
         return this.analyzedInstructions;
     }

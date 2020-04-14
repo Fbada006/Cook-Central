@@ -7,11 +7,24 @@
         android:layout_height="match_parent"
         tools:context=".ui.favs.FavouritesFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:scrollbars="vertical"
+            tools:itemCount="16"
+            tools:listitem="@layout/recipe_item" />
 
+        <TextView
+            android:id="@+id/empty_favs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/no_favourites_to_show"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:visibility="invisible" />
     </FrameLayout>
 </layout>

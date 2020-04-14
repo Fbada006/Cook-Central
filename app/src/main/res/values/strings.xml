@@ -15,4 +15,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
     <string name="image_of_the_ingredient">Image of the ingredient</string>
+    <string name="no_favourites_to_show">No favourites to show. Once you like something, it will appear here.</string>
+    <string name="add_to_favs">Added to favourites</string>
+    <string name="remove_from_favs">Removed from favourtites</string>
 </resources>
