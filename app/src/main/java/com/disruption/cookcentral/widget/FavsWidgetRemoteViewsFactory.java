@@ -55,8 +55,8 @@ public class FavsWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
