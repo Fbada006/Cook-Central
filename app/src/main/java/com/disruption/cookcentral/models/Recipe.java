@@ -3,10 +3,15 @@ package com.disruption.cookcentral.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
+@Entity(tableName = "recipes")
 public class Recipe implements Parcelable {
 
+    @PrimaryKey
     private int id;
 
     private String title;

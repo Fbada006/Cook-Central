@@ -30,7 +30,6 @@ import java.util.Set;
  * A simple {@link Fragment} subclass.
  */
 public class DetailsFragment extends Fragment {
-    private static final String TAG = "DetailsFragment";
 
     private FragmentDetailsBinding mBinding;
 
@@ -55,7 +54,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void setUpViews(Recipe recipe) {
-        mBinding.tvRecipeTime.setText(requireContext().getString(R.string.recipe_time, recipe.getReadyInMinutes()));
+        mBinding.tvRecipeTime.setText(requireContext().getString(R.string.recipe_time, recipe.getReadyInMinutes(), recipe.getServings()));
         mBinding.tvRecipeName.setText(recipe.getTitle());
         mBinding.tvRecipeInstructions.setText(Html.fromHtml(recipe.getSummary()));
         Glide.with(requireContext())
