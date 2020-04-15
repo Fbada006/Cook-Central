@@ -41,15 +41,19 @@ public class RecipesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mAdapter = new RecipesAdapter(this::onRecipeClick);
-        RecyclerView recyclerView = mBinding.recyclerView;
-        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mAdapter);
+        initRv();
 
         mRecipesViewModel = new ViewModelProvider(this).get(RecipesViewModel.class);
 
         observeViewModelForRecipes();
         observeViewModelForNavigation();
+    }
+
+    private void initRv() {
+        RecyclerView recyclerView = mBinding.recyclerView;
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void observeViewModelForRecipes() {
