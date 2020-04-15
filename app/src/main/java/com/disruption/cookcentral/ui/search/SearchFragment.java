@@ -98,11 +98,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public void onResume() {
         super.onResume();
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+        getActivity().findViewById(R.id.adView).setVisibility(View.GONE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).show();
+        getActivity().findViewById(R.id.adView).setVisibility(View.VISIBLE);
     }
 }
