@@ -94,7 +94,6 @@ dependencies {
     // Reactive Streams (convert Observable to LiveData)
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$reactive_streams_version"
 
-
     //CardView
     implementation "androidx.cardview:cardview:$cardview_version"
 
