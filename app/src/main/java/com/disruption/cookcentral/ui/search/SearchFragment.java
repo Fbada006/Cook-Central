@@ -42,6 +42,9 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         mBinding.searchView.setOnQueryTextListener(this);
 
+        mBinding.infoText.setText(requireContext().getString(R.string.search_something_to_continue));
+        mBinding.infoText.setVisibility(View.VISIBLE);
+
         SearchedRecipesAdapter adapter = new SearchedRecipesAdapter();
         initRv(adapter);
 
@@ -53,21 +56,21 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                     if (recipeResponseResource.data != null && !recipeResponseResource.data.getResults().isEmpty()) {
                         adapter.submitList(recipeResponseResource.data.getResults());
                         mBinding.progressBar.setVisibility(View.GONE);
-                        mBinding.errorText.setVisibility(View.GONE);
+                        mBinding.infoText.setVisibility(View.GONE);
                     } else {
                         mBinding.progressBar.setVisibility(View.GONE);
-                        mBinding.errorText.setVisibility(View.VISIBLE);
-                        mBinding.errorText.setText(getString(R.string.no_data_to_display));
+                        mBinding.infoText.setVisibility(View.VISIBLE);
+                        mBinding.infoText.setText(getString(R.string.no_data_to_display));
                     }
                     break;
                 case ERROR:
                     mBinding.progressBar.setVisibility(View.GONE);
-                    mBinding.errorText.setVisibility(View.VISIBLE);
-                    mBinding.errorText.setText(getString(R.string.error_has_occurred, recipeResponseResource.message));
+                    mBinding.infoText.setVisibility(View.VISIBLE);
+                    mBinding.infoText.setText(getString(R.string.error_has_occurred, recipeResponseResource.message));
                     break;
                 case LOADING:
                     mBinding.progressBar.setVisibility(View.VISIBLE);
-                    mBinding.errorText.setVisibility(View.GONE);
+                    mBinding.infoText.setVisibility(View.GONE);
                     break;
             }
         });
@@ -92,11 +95,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (!TextUtils.isEmpty(newText)) {
-            mBinding.errorText.setText(requireContext().getString(R.string.search_something_to_continue));
-            mBinding.errorText.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(newText)) {
+            mBinding.infoText.setText(requireContext().getString(R.string.search_something_to_continue));
+            mBinding.infoText.setVisibility(View.VISIBLE);
         } else {
-            mBinding.errorText.setVisibility(View.GONE);
+            mBinding.infoText.setVisibility(View.GONE);
         }
         return false;
     }
