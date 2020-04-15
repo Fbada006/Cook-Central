@@ -26,7 +26,6 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
-    private static final String TAG = "SearchFragment";
 
     private FragmentSearchBinding mBinding;
     private SearchViewModel mSearchViewModel;
@@ -41,9 +40,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         mBinding.searchView.setOnQueryTextListener(this);
-
-        mBinding.infoText.setText(requireContext().getString(R.string.search_something_to_continue));
-        mBinding.infoText.setVisibility(View.VISIBLE);
 
         SearchedRecipesAdapter adapter = new SearchedRecipesAdapter();
         initRv(adapter);
@@ -95,12 +91,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (TextUtils.isEmpty(newText)) {
-            mBinding.infoText.setText(requireContext().getString(R.string.search_something_to_continue));
-            mBinding.infoText.setVisibility(View.VISIBLE);
-        } else {
-            mBinding.infoText.setVisibility(View.GONE);
-        }
         return false;
     }
 
