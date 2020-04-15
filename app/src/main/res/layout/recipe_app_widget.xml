@@ -18,7 +18,7 @@
         android:textStyle="bold|italic" />
 
     <ListView
-        android:id="@+id/widget_pastry_list"
+        android:id="@+id/widget_recipe_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appwidget_text"

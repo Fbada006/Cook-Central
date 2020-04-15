@@ -1,9 +1,11 @@
 package com.disruption.cookcentral.widget;
 
 import android.content.Context;
+import android.text.Html;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.data.RecipeDatabase;
 import com.disruption.cookcentral.models.CachedRecipe;
 
@@ -40,8 +42,13 @@ public class FavsWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
     }
 
     @Override
-    public RemoteViews getViewAt(int i) {
-        return null;
+    public RemoteViews getViewAt(int position) {
+        RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.item_widget_recipe);
+        CachedRecipe recipe = mRecipeList.get(position);
+        remoteViews.setTextViewText(R.id.recipe_title, recipe.getTitle());
+        remoteViews.setTextViewText(R.id.recipe_summary, Html.fromHtml(recipe.getSummary()));
+
+        return remoteViews;
     }
 
     @Override

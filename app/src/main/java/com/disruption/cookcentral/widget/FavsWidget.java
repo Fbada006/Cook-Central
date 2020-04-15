@@ -3,6 +3,7 @@ package com.disruption.cookcentral.widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.disruption.cookcentral.R;
@@ -19,6 +20,8 @@ public class FavsWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_app_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setRemoteAdapter(R.id.widget_recipe_list,
+                new Intent(context, FavsWidgetRemoteViewsService.class));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
