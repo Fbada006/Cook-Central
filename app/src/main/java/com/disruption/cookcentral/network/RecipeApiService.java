@@ -1,6 +1,7 @@
 package com.disruption.cookcentral.network;
 
 import com.disruption.cookcentral.models.RecipeResponse;
+import com.disruption.cookcentral.models.search.SearchedRecipeResponse;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -15,7 +16,7 @@ public interface RecipeApiService {
     );
 
     @GET("recipes/search")
-    Flowable<RecipeResponse> searchRecipes(
+    Flowable<SearchedRecipeResponse> searchRecipes(
             @Query("query") String query,
             @Query("number") int number,
             @Query("apiKey") String apiKey

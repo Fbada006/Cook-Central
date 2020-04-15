@@ -8,6 +8,8 @@ import com.disruption.cookcentral.BuildConfig;
 import com.disruption.cookcentral.models.CachedRecipe;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.RecipeResponse;
+import com.disruption.cookcentral.models.search.SearchedRecipe;
+import com.disruption.cookcentral.models.search.SearchedRecipeResponse;
 import com.disruption.cookcentral.network.RecipeApiServiceProvider;
 import com.disruption.cookcentral.utils.Resource;
 
@@ -19,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RecipeRepository {
     private static MediatorLiveData<Resource<RecipeResponse>> mRecipeResource;
+    private static MediatorLiveData<Resource<SearchedRecipeResponse>> mSearchedRecipeResource;
     private static final String API_KEY = BuildConfig.RecipeKey;
 
     private RecipeDao mRecipeDao;
@@ -36,10 +39,10 @@ public class RecipeRepository {
                     LiveDataReactiveStreams.fromPublisher(
                             RecipeApiServiceProvider.getRecipeApiService().getRandomRecipes(20, API_KEY)
                                     .onErrorReturn(throwable -> {
-                                        Recipe Recipe = new Recipe();
-                                        Recipe.setId(-111111111);
+                                        Recipe recipe = new Recipe();
+                                        recipe.setId(-111111111);
                                         List<Recipe> recipes = new ArrayList<>();
-                                        recipes.add(Recipe);
+                                        recipes.add(recipe);
                                         return new RecipeResponse(recipes, throwable.getMessage());
                                     })
                                     .map(response -> {
@@ -61,6 +64,42 @@ public class RecipeRepository {
         }
 
         return mRecipeResource;
+    }
+
+    public static LiveData<Resource<SearchedRecipeResponse>> getSearchedRecipes(String query) {
+        if (mSearchedRecipeResource == null) {
+            mSearchedRecipeResource = new MediatorLiveData<>();
+            mSearchedRecipeResource.setValue(Resource.loading());
+
+            final LiveData<Resource<SearchedRecipeResponse>> source =
+                    LiveDataReactiveStreams.fromPublisher(
+                            RecipeApiServiceProvider.getRecipeApiService().searchRecipes(query, 20, API_KEY)
+                                    .onErrorReturn(throwable -> {
+                                        SearchedRecipe searchedRecipe = new SearchedRecipe();
+                                        searchedRecipe.setId(-111111111);
+                                        List<SearchedRecipe> recipes = new ArrayList<>();
+                                        recipes.add(searchedRecipe);
+                                        return new SearchedRecipeResponse(recipes, throwable.getMessage());
+                                    })
+                                    .map(response -> {
+                                        if (response.getResults().size() > 0) {
+                                            if (response.getResults().get(0).getId() == -111111111) {
+                                                if (response.getErrorMessage() != null) {
+                                                    return Resource.error(response.getErrorMessage(), response);
+                                                }
+                                            }
+                                        }
+                                        return Resource.success(response);
+                                    })
+                                    .subscribeOn(Schedulers.io())
+                    );
+            mSearchedRecipeResource.addSource(source, listResource -> {
+                mSearchedRecipeResource.setValue(listResource);
+                mSearchedRecipeResource.removeSource(source);
+            });
+        }
+
+        return mSearchedRecipeResource;
     }
 
     public LiveData<CachedRecipe> loadRecipeById(int recipeId) {

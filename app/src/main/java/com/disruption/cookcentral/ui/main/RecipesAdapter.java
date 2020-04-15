@@ -31,8 +31,8 @@ public class RecipesAdapter extends ListAdapter<Recipe, RecipesAdapter.RecipeVie
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position) {
-        Recipe pastry = getItem(position);
-        holder.bind(pastry, mRecipeClickListener);
+        Recipe recipe = getItem(position);
+        holder.bind(recipe, mRecipeClickListener);
     }
 
     class RecipeViewHolder extends RecyclerView.ViewHolder {

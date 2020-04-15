@@ -12,6 +12,17 @@ public class SearchedRecipe {
 
     private String image;
 
+    public SearchedRecipe(int id, String title, int readyInMinutes, int servings, String image) {
+        this.id = id;
+        this.title = title;
+        this.readyInMinutes = readyInMinutes;
+        this.servings = servings;
+        this.image = image;
+    }
+
+    public SearchedRecipe() {
+    }
+
     public int getId() {
         return this.id;
     }
