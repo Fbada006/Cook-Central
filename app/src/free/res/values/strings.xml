@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Cook Central</string>
+    <string name="recipe_time">%d minutes and serves %d</string>
+    <string name="image_of_the_recipe">Image of the recipe</string>
+    <string name="no_data_to_display">There is no data to display. Please try again</string>
+    <string name="error_has_occurred">Houston…We have the following problem: %s</string>
+
+    <string name="fragment_recipes_label">Discover</string>
+    <string name="fragment_fav_label">Favourites</string>
+    <string name="fragment_search_label">Search</string>
+
+
+    <string name="fragment_details_label">Details</string>
+    <string name="there_is_no_data_to_show">There is no data to show</string>
+
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+
+    <string name="image_of_the_ingredient">Image of the ingredient</string>
+
+    <string name="no_favourites_to_show">No favourites to show. Once you like something, it will appear here.</string>
+    <string name="add_to_favs">Added to favourites</string>
+    <string name="remove_from_favs">Removed from favourtites</string>
+
+    <string name="joke_channel_notification_channel">Food joke notification</string>
+    <string name="joke_channel_notification_channel_description">Shows notifications when the joke is ready</string>
+    <string name="random_recipe_worker_name" translatable="false">RandomRecipeWorker</string>
+
+    <string name="add_widget">Add widget</string>
+    <string name="search">Search recipe here</string>
+    <string name="search_something_to_continue">Search something to continue</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+</resources>
