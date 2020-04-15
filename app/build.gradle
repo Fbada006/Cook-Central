@@ -7,7 +7,7 @@ android {
     signingConfigs {
 
         config {
-            storeFile file('.../keystore.jks')
+            storeFile file('../keystore.jks')
             storePassword 'password'
             keyAlias = 'testAlias'
             keyPassword 'password'
@@ -64,6 +64,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     testImplementation "junit:junit:$junit_version"
+    implementation "org.jetbrains:annotations:$annotations_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$expresso_version"
 
