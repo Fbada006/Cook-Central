@@ -3,6 +3,17 @@ apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.gms.google-services'
 
 android {
+
+    signingConfigs {
+
+        config {
+            storeFile file('.../keystore.jks')
+            storePassword 'password'
+            keyAlias = 'testAlias'
+            keyPassword 'password'
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -23,6 +34,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "RecipeKey", RecipeKey
+            signingConfig signingConfigs.config
         }
     }
 
