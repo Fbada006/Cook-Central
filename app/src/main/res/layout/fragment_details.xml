@@ -16,7 +16,7 @@
             android:contentDescription="@string/image_of_the_recipe"
             android:fitsSystemWindows="true"
             app:layout_collapseMode="parallax"
-            tools:src="@drawable/android" />
+            tools:src="@drawable/ic_time" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/item_detail_container"
