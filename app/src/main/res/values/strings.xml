@@ -24,6 +24,7 @@
 
     <string name="joke_channel_notification_channel">Food joke notification</string>
     <string name="joke_channel_notification_channel_description">Shows notifications when the joke is ready</string>
+    <string name="random_recipe_worker_name" translatable="false">RandomRecipeWorker</string>
 
     <string name="add_widget">Add widget</string>
 </resources>

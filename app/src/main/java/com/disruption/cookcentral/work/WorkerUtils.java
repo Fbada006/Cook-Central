@@ -42,7 +42,7 @@ final class WorkerUtils {
      * @param title   is the title of the notification
      * @param message is the message from the notification
      */
-    static void makeJokeNotification(Context context, String title, String message) {
+    static void makeRandomRecipeNotification(Context context, String title, String message) {
 
         // Make a channel if necessary
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
