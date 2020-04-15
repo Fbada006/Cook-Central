@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 .setTestDeviceIds(new ArrayList<>(Collections.singletonList(AdRequest.DEVICE_ID_EMULATOR)))
                 .build();
         MobileAds.setRequestConfiguration(requestConfiguration);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        ((AdView) findViewById(R.id.adView)).loadAd(adRequest);
     }
 
     private void initNavComponent() {
