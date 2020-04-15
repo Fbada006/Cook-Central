@@ -20,6 +20,7 @@ includes the necessary files for signing it.
 - [Architecture](#architecture)
 - [Flow](#flow)
 - [Libraries](#libraries)
+- [License](#license)
 
 ## Architecture
 
@@ -65,7 +66,10 @@ This app takes use of the following libraries:
   - [Glide](https://github.com/bumptech/glide) - An image loading and caching library for Android focused on smooth scrolling
 
 
-   Copyright [2020] [Ferdinand Bada]
+## License
+
+ ```
+   Copyright 2020 Ferdinand Bada
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -78,3 +82,4 @@ This app takes use of the following libraries:
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+ ```
