@@ -1,17 +1,25 @@
 package com.disruption.cookcentral.ui.favs;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentFavouritesBinding;
+import com.disruption.cookcentral.models.CachedRecipe;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +28,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class FavouritesFragment extends Fragment {
     private FragmentFavouritesBinding mBinding;
+    private CachedRecipesAdapter mAdapter;
+    private FavouritesViewModel mFavsViewModel;
 
     public FavouritesFragment() {
         // Required empty public constructor
@@ -37,21 +47,52 @@ public class FavouritesFragment extends Fragment {
     }
 
     private void showFavs() {
-        CachedRecipesAdapter adapter = new CachedRecipesAdapter();
+        mAdapter = new CachedRecipesAdapter();
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         mBinding.recyclerView.setHasFixedSize(true);
-        mBinding.recyclerView.setAdapter(adapter);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        itemTouchHelper().attachToRecyclerView(mBinding.recyclerView);
 
         FavouritesViewModelFactory factory = new FavouritesViewModelFactory(requireActivity().getApplication());
 
-        FavouritesViewModel favsViewModel = new ViewModelProvider(this, factory).get(FavouritesViewModel.class);
+        mFavsViewModel = new ViewModelProvider(this, factory).get(FavouritesViewModel.class);
 
-        favsViewModel.mFavData.observe(this, recipes -> {
+        mFavsViewModel.mFavData.observe(this, recipes -> {
             if (recipes != null && !recipes.isEmpty()) {
-                adapter.submitList(recipes);
+                mAdapter.submitList(recipes);
                 mBinding.emptyFavs.setVisibility(View.INVISIBLE);
             } else {
                 mBinding.emptyFavs.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private ItemTouchHelper itemTouchHelper() {
+        return new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                CachedRecipe recipe = mAdapter.getCachedRecipeAtPosition(viewHolder.getBindingAdapterPosition());
+                mFavsViewModel.deleteRecipeFromFavourites(recipe);
+
+                CoordinatorLayout container = requireActivity().findViewById(R.id.container);
+                BottomNavigationView navigationView = requireActivity().findViewById(R.id.bottom_nav_view);
+                final Snackbar snack = Snackbar.make(container, requireContext().getString(R.string.recipe_deleted),
+                        Snackbar.LENGTH_LONG)
+                        .setAction("Undo", view -> mFavsViewModel.insertRecipeToFavourites(recipe));
+
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                        snack.getView().getLayoutParams();
+                params.setAnchorId(R.id.bottom_nav_view);
+                params.gravity = Gravity.TOP;
+                params.anchorGravity = Gravity.TOP;
+                snack.getView().setLayoutParams(params);
+
+                snack.show();
             }
         });
     }

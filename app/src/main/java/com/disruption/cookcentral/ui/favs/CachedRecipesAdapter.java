@@ -47,6 +47,10 @@ public class CachedRecipesAdapter extends ListAdapter<CachedRecipe, CachedRecipe
         holder.bind(pastry);
     }
 
+    public CachedRecipe getCachedRecipeAtPosition(int position) {
+        return getItem(position);
+    }
+
     class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         private CachedRecipeItemBinding mRecipeBinding;

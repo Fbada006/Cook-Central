@@ -27,4 +27,5 @@
     <string name="random_recipe_worker_name" translatable="false">RandomRecipeWorker</string>
 
     <string name="search">Search recipe here</string>
+    <string name="recipe_deleted">Recipe deleted</string>
 </resources>

@@ -15,10 +15,19 @@ import java.util.List;
 public class FavouritesViewModel extends AndroidViewModel {
 
     public LiveData<List<CachedRecipe>> mFavData;
+    private RecipeRepository mRecipeRepository;
 
     public FavouritesViewModel(@NonNull Application application) {
         super(application);
-        mFavData =
-                new RecipeRepository(RecipeDatabase.getInstance(application).recipeDao()).getAllFavs();
+        mRecipeRepository = new RecipeRepository(RecipeDatabase.getInstance(application).recipeDao());
+        mFavData = mRecipeRepository.getAllFavs();
+    }
+
+    public void deleteRecipeFromFavourites(CachedRecipe recipe) {
+        mRecipeRepository.deleteRecipeFromFavs(recipe);
+    }
+
+    public void insertRecipeToFavourites(CachedRecipe recipe) {
+        mRecipeRepository.addRecipeToFavs(recipe);
     }
 }
