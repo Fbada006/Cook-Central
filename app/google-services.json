@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "729660027798",
+    "firebase_url": "https://cookcentral-f2e50.firebaseio.com",
+    "project_id": "cookcentral-f2e50",
+    "storage_bucket": "cookcentral-f2e50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729660027798:android:af82feea3865a7f65e63b7",
+        "android_client_info": {
+          "package_name": "com.disruption.cookcentral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729660027798-hl9l6qrp6bfji3or3f39tpmt1ans6ta1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEYoEy4GXVLzUZ2uTn548knK3rsjjmUDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729660027798-hl9l6qrp6bfji3or3f39tpmt1ans6ta1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

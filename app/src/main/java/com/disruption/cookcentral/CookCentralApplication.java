@@ -1,7 +1,6 @@
 package com.disruption.cookcentral;
 
-import android.app.Application;
-
+import androidx.multidex.MultiDexApplication;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
@@ -12,7 +11,7 @@ import com.disruption.cookcentral.work.RandomRecipeWorker;
 
 import java.util.concurrent.TimeUnit;
 
-public class CookCentralApplication extends Application {
+public class CookCentralApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
