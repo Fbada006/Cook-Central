@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.disruption.cookcentral.BuildConfig;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.RecipeResponse;
 import com.disruption.cookcentral.network.RecipeApiServiceProvider;
+import com.disruption.cookcentral.utils.Constants;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -31,7 +31,7 @@ public class RandomRecipeWorker extends Worker {
     @Override
     public Result doWork() {
         try {
-            RecipeApiServiceProvider.getRecipeApiService().getRandomRecipes(1, BuildConfig.RecipeKey)
+            RecipeApiServiceProvider.getRecipeApiService().getRandomRecipes(1, Constants.API_KEY)
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Subscriber<RecipeResponse>() {
                         @Override

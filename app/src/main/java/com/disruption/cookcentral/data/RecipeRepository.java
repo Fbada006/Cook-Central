@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MediatorLiveData;
 
-import com.disruption.cookcentral.BuildConfig;
 import com.disruption.cookcentral.models.CachedRecipe;
 import com.disruption.cookcentral.models.Recipe;
 import com.disruption.cookcentral.models.RecipeResponse;
 import com.disruption.cookcentral.models.search.SearchedRecipe;
 import com.disruption.cookcentral.models.search.SearchedRecipeResponse;
 import com.disruption.cookcentral.network.RecipeApiServiceProvider;
+import com.disruption.cookcentral.utils.Constants;
 import com.disruption.cookcentral.utils.Resource;
 
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import io.reactivex.schedulers.Schedulers;
 public class RecipeRepository {
     private static MediatorLiveData<Resource<RecipeResponse>> mRecipeResource;
     private static MediatorLiveData<Resource<SearchedRecipeResponse>> mSearchedRecipeResource;
-    private static final String API_KEY = BuildConfig.RecipeKey;
 
     private RecipeDao mRecipeDao;
 
@@ -37,7 +36,7 @@ public class RecipeRepository {
 
             final LiveData<Resource<RecipeResponse>> source =
                     LiveDataReactiveStreams.fromPublisher(
-                            RecipeApiServiceProvider.getRecipeApiService().getRandomRecipes(20, API_KEY)
+                            RecipeApiServiceProvider.getRecipeApiService().getRandomRecipes(20, Constants.API_KEY)
                                     .onErrorReturn(throwable -> {
                                         Recipe recipe = new Recipe();
                                         recipe.setId(-111111111);
@@ -73,7 +72,7 @@ public class RecipeRepository {
 
             final LiveData<Resource<SearchedRecipeResponse>> source =
                     LiveDataReactiveStreams.fromPublisher(
-                            RecipeApiServiceProvider.getRecipeApiService().searchRecipes(query, 20, API_KEY)
+                            RecipeApiServiceProvider.getRecipeApiService().searchRecipes(query, 20, Constants.API_KEY)
                                     .onErrorReturn(throwable -> {
                                         SearchedRecipe searchedRecipe = new SearchedRecipe();
                                         searchedRecipe.setId(-111111111);
