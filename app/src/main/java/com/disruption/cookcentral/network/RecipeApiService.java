@@ -13,4 +13,11 @@ public interface RecipeApiService {
             @Query("number") int number,
             @Query("apiKey") String apiKey
     );
+
+    @GET("recipes/search")
+    Flowable<RecipeResponse> searchRecipes(
+            @Query("query") String query,
+            @Query("number") int number,
+            @Query("apiKey") String apiKey
+    );
 }
