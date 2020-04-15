@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/universal_horizontal_margin"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/universal_text_size"
         android:textStyle="bold"
         tools:text="This is the title of the recipe" />

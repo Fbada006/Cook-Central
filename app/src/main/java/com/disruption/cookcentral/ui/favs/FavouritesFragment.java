@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.disruption.cookcentral.R;
+import com.disruption.cookcentral.data.TinyDb;
 import com.disruption.cookcentral.databinding.FragmentFavouritesBinding;
 import com.disruption.cookcentral.models.CachedRecipe;
+import com.disruption.cookcentral.utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,6 +61,7 @@ public class FavouritesFragment extends Fragment {
         mFavsViewModel.mFavData.observe(this, recipes -> {
             if (recipes != null && !recipes.isEmpty()) {
                 mAdapter.submitList(recipes);
+                new TinyDb(requireContext()).saveListOfFavouriteRecipes(Constants.FAV_KEY, recipes);
                 mBinding.emptyFavs.setVisibility(View.INVISIBLE);
             } else {
                 mBinding.emptyFavs.setVisibility(View.VISIBLE);

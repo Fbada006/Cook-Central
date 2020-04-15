@@ -13,6 +13,7 @@ import com.disruption.cookcentral.R;
  */
 public class FavsWidget extends AppWidgetProvider {
 
+    //TODO: Explore widgets some more
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 

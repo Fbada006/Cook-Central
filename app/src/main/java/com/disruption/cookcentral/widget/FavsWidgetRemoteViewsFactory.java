@@ -2,12 +2,14 @@ package com.disruption.cookcentral.widget;
 
 import android.content.Context;
 import android.text.Html;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.disruption.cookcentral.R;
-import com.disruption.cookcentral.data.RecipeDatabase;
+import com.disruption.cookcentral.data.TinyDb;
 import com.disruption.cookcentral.models.CachedRecipe;
+import com.disruption.cookcentral.utils.Constants;
 
 import java.util.List;
 
@@ -15,7 +17,6 @@ public class FavsWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
     private Context mContext;
     private List<CachedRecipe> mRecipeList;
-    private RecipeDatabase mRecipeDatabase;
 
     public FavsWidgetRemoteViewsFactory(Context context) {
         mContext = context;
@@ -23,12 +24,11 @@ public class FavsWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
     @Override
     public void onCreate() {
-        mRecipeDatabase = RecipeDatabase.getInstance(mContext);
+        mRecipeList = new TinyDb(mContext).getListOfFavouriteRecipes(Constants.FAV_KEY);
     }
 
     @Override
     public void onDataSetChanged() {
-        mRecipeList = mRecipeDatabase.recipeDao().loadAllFavsForWidget();
     }
 
     @Override
@@ -38,16 +38,21 @@ public class FavsWidgetRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
     @Override
     public int getCount() {
-        return mRecipeList.size();
+        return mRecipeList != null ? mRecipeList.size() : 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.item_widget_recipe);
         CachedRecipe recipe = mRecipeList.get(position);
-        remoteViews.setTextViewText(R.id.recipe_title, recipe.getTitle());
-        remoteViews.setTextViewText(R.id.recipe_summary, Html.fromHtml(recipe.getSummary()));
 
+        if (mRecipeList.isEmpty()) {
+            remoteViews.setTextViewText(R.id.recipe_title, mContext.getString(R.string.no_favourites_to_show));
+            remoteViews.setViewVisibility(R.id.recipe_summary, View.GONE);
+        } else {
+            remoteViews.setTextViewText(R.id.recipe_title, recipe.getTitle());
+            remoteViews.setTextViewText(R.id.recipe_summary, Html.fromHtml(recipe.getSummary()));
+        }
         return remoteViews;
     }
 

@@ -7,4 +7,5 @@ public final class Constants {
     public static final String CHANNEL_ID = "com.disruption.cookcentral.foodjoke";
     public static final int NOTIFICATION_ID = 1;
     public static final String API_KEY = "8ba4dea3c3fc47329613981372dc8859";
+    public static final String FAV_KEY = "com.disruption.cookcentral.favkey";
 }
