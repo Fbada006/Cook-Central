@@ -106,5 +106,5 @@ dependencies {
 
     //Firebase
     implementation "com.google.firebase:firebase-analytics:$analytics_version"
-    implementation "com.google.android.gms:play-services-ads:$ads_version"
+    freeImplementation "com.google.android.gms:play-services-ads:$ads_version"
 }
