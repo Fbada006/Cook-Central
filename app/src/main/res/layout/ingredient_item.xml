@@ -14,11 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="@dimen/horizontal_margin_small">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/ingredient_image_size"
+            android:layout_height="@dimen/ingredient_image_size"
             android:contentDescription="@string/image_of_the_ingredient"
             app:imageIngredient="@{ingredient.image}"
             tools:src="@drawable/ic_time" />
@@ -26,11 +26,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/universal_horizontal_margin"
             android:gravity="center_vertical"
             android:text="@{ingredient.name}"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/universal_text_size"
             tools:text="Cucumber onion" />
 
     </LinearLayout>

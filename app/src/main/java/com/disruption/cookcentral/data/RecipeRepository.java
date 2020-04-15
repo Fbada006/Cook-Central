@@ -114,6 +114,10 @@ public class RecipeRepository {
         Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.removeRecipeFromFavourites(recipe));
     }
 
+    public void nukeFavsTable() {
+        Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.nukeFavsTable());
+    }
+
     public void addRecipeToFavs(CachedRecipe recipe) {
         Executors.newSingleThreadExecutor().execute(() -> mRecipeDao.addRecipeToFavourites(recipe));
     }

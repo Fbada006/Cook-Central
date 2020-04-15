@@ -27,6 +27,10 @@ public class FavouritesViewModel extends AndroidViewModel {
         mRecipeRepository.deleteRecipeFromFavs(recipe);
     }
 
+    public void nukeFavsTable() {
+        mRecipeRepository.nukeFavsTable();
+    }
+
     public void insertRecipeToFavourites(CachedRecipe recipe) {
         mRecipeRepository.addRecipeToFavs(recipe);
     }

@@ -27,4 +27,7 @@ public interface RecipeDao {
 
     @Delete
     void removeRecipeFromFavourites(CachedRecipe recipe);
+
+    @Query("DELETE FROM recipes")
+    void nukeFavsTable();
 }

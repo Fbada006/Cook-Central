@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:padding="8dp">
+    android:padding="@dimen/universal_horizontal_margin">
 
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/universal_horizontal_margin"
         android:contentDescription="@string/fragment_fav_label"
         android:text="@string/fragment_fav_label"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_size_large"
         android:textStyle="bold|italic" />
 
     <ListView
@@ -22,10 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appwidget_text"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/universal_horizontal_margin"
+        android:layout_marginTop="@dimen/universal_horizontal_margin"
+        android:layout_marginEnd="@dimen/universal_horizontal_margin"
+        android:layout_marginBottom="@dimen/universal_horizontal_margin"
         tools:listitem="@layout/item_widget_recipe" />
 
 </RelativeLayout>

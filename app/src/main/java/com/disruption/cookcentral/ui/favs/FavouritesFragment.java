@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.disruption.cookcentral.R;
 import com.disruption.cookcentral.databinding.FragmentFavouritesBinding;
 import com.disruption.cookcentral.models.CachedRecipe;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -80,10 +79,10 @@ public class FavouritesFragment extends Fragment {
                 mFavsViewModel.deleteRecipeFromFavourites(recipe);
 
                 CoordinatorLayout container = requireActivity().findViewById(R.id.container);
-                BottomNavigationView navigationView = requireActivity().findViewById(R.id.bottom_nav_view);
                 final Snackbar snack = Snackbar.make(container, requireContext().getString(R.string.recipe_deleted),
                         Snackbar.LENGTH_LONG)
-                        .setAction("Undo", view -> mFavsViewModel.insertRecipeToFavourites(recipe));
+                        .setAction(requireContext().getString(R.string.undo_fav_delete),
+                                view -> mFavsViewModel.insertRecipeToFavourites(recipe));
 
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
                         snack.getView().getLayoutParams();
