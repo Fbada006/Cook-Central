@@ -11,7 +11,7 @@
 
         <variable
             name="clickListener"
-            type="com.disruption.cookcentral.ui.main.RecipesAdapter.RecipeClickListener" />
+            type="com.disruption.cookcentral.ui.main.RecipeClickListener" />
 
     </data>
 
