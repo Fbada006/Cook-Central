@@ -11,12 +11,12 @@ interface RecipeApiService {
     fun getRandomRecipes(
             @Query("number") number: Int,
             @Query("apiKey") apiKey: String?
-    ): Flowable<RecipeResponse?>?
+    ): Flowable<RecipeResponse>
 
     @GET("recipes/search")
     fun searchRecipes(
             @Query("query") query: String?,
             @Query("number") number: Int,
             @Query("apiKey") apiKey: String?
-    ): Flowable<SearchedRecipeResponse?>?
+    ): Flowable<SearchedRecipeResponse>
 }

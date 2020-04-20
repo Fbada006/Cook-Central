@@ -26,6 +26,7 @@ class FavsWidgetRemoteViewsFactory(private val mContext: Context) : RemoteViewsF
     override fun getViewAt(position: Int): RemoteViews {
         val remoteViews = RemoteViews(mContext.packageName, R.layout.item_widget_recipe)
         val recipe = mRecipeList!![position]
+
         if (mRecipeList!!.isEmpty()) {
             remoteViews.setTextViewText(R.id.recipe_title, mContext.getString(R.string.no_favourites_to_show))
             remoteViews.setViewVisibility(R.id.recipe_summary, View.GONE)

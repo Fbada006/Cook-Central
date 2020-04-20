@@ -13,14 +13,14 @@ import org.reactivestreams.Subscription
 class RandomRecipeWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     override fun doWork(): Result {
         return try {
-            recipeApiService.getRandomRecipes(1, Constants.API_KEY)!!
+            recipeApiService.getRandomRecipes(1, Constants.API_KEY)
                     .subscribeOn(Schedulers.io())
-                    .subscribe(object : Subscriber<RecipeResponse?> {
+                    .subscribe(object : Subscriber<RecipeResponse> {
 
                         override fun onSubscribe(s: Subscription) {}
 
-                        override fun onNext(recipeResponse: RecipeResponse?) {
-                            val recipe = recipeResponse!!.recipes[0]
+                        override fun onNext(recipeResponse: RecipeResponse) {
+                            val recipe = recipeResponse.recipes[0]
 
                             WorkerUtils.makeRandomRecipeNotification(applicationContext,
                                     recipe.title, recipe.summary)

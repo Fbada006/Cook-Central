@@ -47,7 +47,7 @@ class RecipeRepository(private val mRecipeDao: RecipeDao) {
                     mRecipeResource = MediatorLiveData()
                     mRecipeResource!!.value = Resource.loading()
                     val source = LiveDataReactiveStreams.fromPublisher(
-                            RecipeApiServiceProvider.recipeApiService.getRandomRecipes(20, Constants.API_KEY)!!
+                            RecipeApiServiceProvider.recipeApiService.getRandomRecipes(20, Constants.API_KEY)
                                     .onErrorReturn { throwable: Throwable ->
                                         val recipe = Recipe()
                                         recipe.id = -111111111
@@ -79,8 +79,9 @@ class RecipeRepository(private val mRecipeDao: RecipeDao) {
             if (mSearchedRecipeResource == null) {
                 mSearchedRecipeResource = MediatorLiveData()
                 mSearchedRecipeResource!!.value = Resource.loading()
+
                 val source = LiveDataReactiveStreams.fromPublisher(
-                        RecipeApiServiceProvider.recipeApiService.searchRecipes(query, 20, Constants.API_KEY)!!
+                        RecipeApiServiceProvider.recipeApiService.searchRecipes(query, 20, Constants.API_KEY)
                                 .onErrorReturn { throwable ->
                                     val searchedRecipe = SearchedRecipe()
                                     searchedRecipe.id = -111111111
@@ -108,5 +109,4 @@ class RecipeRepository(private val mRecipeDao: RecipeDao) {
             return mSearchedRecipeResource
         }
     }
-
 }
