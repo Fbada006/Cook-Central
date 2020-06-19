@@ -12,19 +12,15 @@ import com.disruption.cookcentral.network.RecipeApiServiceProvider
 import com.disruption.cookcentral.utils.Constants
 import com.disruption.cookcentral.utils.Resource
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.Executors
 
 class RecipeRepository(recipeDatabase: RecipeDatabase) {
 
     private val mRecipeDao = recipeDatabase.recipeDao()
 
-    fun loadRecipeById(recipeId: Int): LiveData<CachedRecipe> {
-        return mRecipeDao.loadRecipeById(recipeId)
-    }
+    fun loadRecipeById(recipeId: Int) = mRecipeDao.loadRecipeById(recipeId)
 
-    val allFavs: LiveData<List<CachedRecipe>>
-        get() = mRecipeDao.loadAllFavs()
+    val allFavs = mRecipeDao.loadAllFavs()
 
     fun deleteRecipeFromFavs(recipe: CachedRecipe) {
         Executors.newSingleThreadExecutor().execute { mRecipeDao.removeRecipeFromFavourites(recipe) }
@@ -50,10 +46,10 @@ class RecipeRepository(recipeDatabase: RecipeDatabase) {
                     mRecipeResource!!.value = Resource.loading()
                     val source = LiveDataReactiveStreams.fromPublisher(
                             RecipeApiServiceProvider.recipeApiService.getRandomRecipes(20, Constants.API_KEY)
-                                    .onErrorReturn { throwable: Throwable ->
+                                    .onErrorReturn { throwable ->
                                         val recipe = Recipe()
                                         recipe.id = -111111111
-                                        val recipes: MutableList<Recipe> = ArrayList()
+                                        val recipes = mutableListOf<Recipe>()
                                         recipes.add(recipe)
                                         RecipeResponse(recipes, throwable.message)
                                     }
@@ -69,7 +65,7 @@ class RecipeRepository(recipeDatabase: RecipeDatabase) {
                                     }
                                     .subscribeOn(Schedulers.io())
                     )
-                    mRecipeResource!!.addSource(source) { listResource: Resource<RecipeResponse> ->
+                    mRecipeResource!!.addSource(source) { listResource ->
                         mRecipeResource!!.value = listResource
                         mRecipeResource!!.removeSource(source)
                     }
@@ -87,7 +83,7 @@ class RecipeRepository(recipeDatabase: RecipeDatabase) {
                                 .onErrorReturn { throwable ->
                                     val searchedRecipe = SearchedRecipe()
                                     searchedRecipe.id = -111111111
-                                    val recipes: MutableList<SearchedRecipe> = ArrayList()
+                                    val recipes = mutableListOf<SearchedRecipe>()
                                     recipes.add(searchedRecipe)
                                     SearchedRecipeResponse(recipes, throwable.message)
                                 }
@@ -103,7 +99,7 @@ class RecipeRepository(recipeDatabase: RecipeDatabase) {
                                 }
                                 .subscribeOn(Schedulers.io())
                 )
-                mSearchedRecipeResource!!.addSource(source) { listResource: Resource<SearchedRecipeResponse> ->
+                mSearchedRecipeResource!!.addSource(source) { listResource ->
                     mSearchedRecipeResource!!.value = listResource
                     mSearchedRecipeResource!!.removeSource(source)
                 }
