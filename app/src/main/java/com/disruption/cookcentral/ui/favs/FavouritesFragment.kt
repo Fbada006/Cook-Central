@@ -72,7 +72,7 @@ class FavouritesFragment : Fragment() {
                 val snack = Snackbar.make(container, requireContext().getString(R.string.recipe_deleted),
                         Snackbar.LENGTH_LONG)
                         .setAction(requireContext().getString(R.string.undo_fav_delete)
-                        ) { _: View? -> mFavsViewModel!!.insertRecipeToFavourites(recipe) }
+                        ) { mFavsViewModel!!.insertRecipeToFavourites(recipe) }
 
                 val params = snack.view.layoutParams as CoordinatorLayout.LayoutParams
                 params.anchorId = R.id.bottom_nav_view

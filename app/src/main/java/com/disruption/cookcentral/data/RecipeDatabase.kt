@@ -14,17 +14,20 @@ abstract class RecipeDatabase : RoomDatabase() {
         private val LOCK = Any()
         private const val DATABASE_NAME = "recipelist"
 
-        private lateinit var sInstance: RecipeDatabase
+        @Volatile
+        private var sInstance: RecipeDatabase? = null
 
         fun getInstance(context: Context): RecipeDatabase {
-            if (sInstance == null) {
-                synchronized(LOCK) {
-                    sInstance = Room.databaseBuilder(context.applicationContext,
+            synchronized(LOCK) {
+                var instance = sInstance
+                if (instance == null) {
+                    instance = Room.databaseBuilder(context.applicationContext,
                             RecipeDatabase::class.java, DATABASE_NAME)
                             .build()
+                    sInstance = instance
                 }
+                return instance
             }
-            return sInstance
         }
     }
 }
