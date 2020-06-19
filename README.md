@@ -60,7 +60,8 @@ This app takes use of the following libraries:
   - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Notify views when underlying database changes
   - [Retrofit](https://square.github.io/retrofit/) - type safe http client with RxJava support
   - [Gson](https://github.com/google/gson) - A Java serialization/deserialization library to convert Java Objects into JSON and back
-  - [RxJava2](https://github.com/ReactiveX/RxJava) - a library for composing asynchronous and event-based programs using observable sequences for the Java VM.
+  - [RxJava2](https://github.com/ReactiveX/RxJava) - A library for composing asynchronous and event-based programs using observable sequences for the Java VM.
+  - [Koin](https://insert-koin.io/) - A pragmatic lightweight dependency injection framework for Kotlin developers
   - [Material Design](https://material.io/develop/android/docs/getting-started/) - build awesome beautiful UIs.🔥🔥
   - [Firebase](https://firebase.google.com/) - Backend As A Service for faster mobile development.
   - [Crashylitics](https://firebase.google.com/docs/crashlytics) - Provide Realtime crash reports from users end.
