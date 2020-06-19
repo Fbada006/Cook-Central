@@ -17,10 +17,6 @@ class FavouritesViewModel(application: Application) : AndroidViewModel(applicati
         mRecipeRepository.deleteRecipeFromFavs(recipe)
     }
 
-    fun nukeFavsTable() {
-        mRecipeRepository.nukeFavsTable()
-    }
-
     fun insertRecipeToFavourites(recipe: CachedRecipe) {
         mRecipeRepository.addRecipeToFavs(recipe)
     }
