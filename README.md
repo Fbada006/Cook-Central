@@ -1,3 +1,5 @@
+![Build Project](https://github.com/Fbada006/Cook-Central/workflows/Build%20Project/badge.svg)
+
 # Cook-Central
 
 Cook Central is my capstone project in the Android Developer Nanodegree Program by Udacity. It is an app
