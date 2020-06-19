@@ -9,7 +9,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +18,7 @@ import com.disruption.cookcentral.databinding.FragmentFavouritesBinding
 import com.disruption.cookcentral.models.CachedRecipe
 import com.disruption.cookcentral.utils.Constants
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -26,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 class FavouritesFragment : Fragment() {
     private lateinit var mBinding: FragmentFavouritesBinding
     private var mAdapter: CachedRecipesAdapter? = null
-    private var mFavsViewModel: FavouritesViewModel? = null
+    private val mFavsViewModel: FavouritesViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,10 +43,8 @@ class FavouritesFragment : Fragment() {
         mBinding.recyclerView.adapter = mAdapter
 
         itemTouchHelper().attachToRecyclerView(mBinding.recyclerView)
-        val factory = FavouritesViewModelFactory(requireActivity().application)
-        mFavsViewModel = ViewModelProvider(this, factory).get(FavouritesViewModel::class.java)
 
-        mFavsViewModel!!.mFavData.observe(viewLifecycleOwner, Observer { recipes: List<CachedRecipe?>? ->
+        mFavsViewModel.mFavData.observe(viewLifecycleOwner, Observer { recipes: List<CachedRecipe?>? ->
             if (recipes != null && recipes.isNotEmpty()) {
                 mAdapter!!.submitList(recipes)
                 TinyDb(requireContext()).saveListOfFavouriteRecipes(Constants.FAV_KEY, recipes)
@@ -66,13 +64,13 @@ class FavouritesFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val recipe = mAdapter!!.getCachedRecipeAtPosition(viewHolder.bindingAdapterPosition)!!
 
-                mFavsViewModel!!.deleteRecipeFromFavourites(recipe)
+                mFavsViewModel.deleteRecipeFromFavourites(recipe)
 
                 val container: CoordinatorLayout = requireActivity().findViewById(R.id.container)
                 val snack = Snackbar.make(container, requireContext().getString(R.string.recipe_deleted),
                         Snackbar.LENGTH_LONG)
                         .setAction(requireContext().getString(R.string.undo_fav_delete)
-                        ) { mFavsViewModel!!.insertRecipeToFavourites(recipe) }
+                        ) { mFavsViewModel.insertRecipeToFavourites(recipe) }
 
                 val params = snack.view.layoutParams as CoordinatorLayout.LayoutParams
                 params.anchorId = R.id.bottom_nav_view

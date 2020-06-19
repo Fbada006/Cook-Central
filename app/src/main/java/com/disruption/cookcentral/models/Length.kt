@@ -1,7 +1,10 @@
 package com.disruption.cookcentral.models
 
-class Length {
-    val number = 0
-    val unit: String? = null
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-}
+@Parcelize
+data class Length(
+        val number: Int = 0,
+        val unit: String? = null
+) : Parcelable
