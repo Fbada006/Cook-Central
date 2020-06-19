@@ -123,6 +123,9 @@ dependencies {
     //Multidex
     implementation "androidx.multidex:multidex:$multidex_version"
 
+    //DI
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
     //Firebase
     implementation "com.google.firebase:firebase-analytics:$analytics_version"
     freeImplementation "com.google.android.gms:play-services-ads:$ads_version"

@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.disruption.cookcentral.R
 import com.disruption.cookcentral.databinding.RecipesFragmentBinding
 import com.disruption.cookcentral.models.Recipe
 import com.disruption.cookcentral.utils.Resource
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class RecipesFragment : Fragment() {
     private lateinit var mBinding: RecipesFragmentBinding
     private var mAdapter: RecipesAdapter? = null
-    private var mRecipesViewModel: RecipesViewModel? = null
+    private val mRecipesViewModel: RecipesViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -30,7 +30,7 @@ class RecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mAdapter = RecipesAdapter(RecipeClickListener { recipe: Recipe -> onRecipeClick(recipe) })
         initRv()
-        mRecipesViewModel = ViewModelProvider(this).get(RecipesViewModel::class.java)
+        // mRecipesViewModel = ViewModelProvider(this).get(RecipesViewModel::class.java)
         observeViewModelForRecipes()
         observeViewModelForNavigation()
     }
@@ -43,7 +43,7 @@ class RecipesFragment : Fragment() {
     }
 
     private fun observeViewModelForRecipes() {
-        mRecipesViewModel!!.mRecipeResource?.observe(viewLifecycleOwner, Observer { recipeResponseResource ->
+        mRecipesViewModel.mRecipeResource?.observe(viewLifecycleOwner, Observer { recipeResponseResource ->
             when (recipeResponseResource.status) {
                 Resource.Status.SUCCESS -> if (recipeResponseResource.data != null && recipeResponseResource.data.recipes.isNotEmpty()) {
                     mAdapter!!.submitList(recipeResponseResource.data.recipes)
@@ -68,7 +68,7 @@ class RecipesFragment : Fragment() {
     }
 
     private fun observeViewModelForNavigation() {
-        mRecipesViewModel!!.getNavigateToRecipe().observe(viewLifecycleOwner, Observer { recipe: Recipe? ->
+        mRecipesViewModel.getNavigateToRecipe().observe(viewLifecycleOwner, Observer { recipe: Recipe? ->
             if (recipe != null) {
                 //Then the user has clicked on a recipe so navigation is required
                 Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(
@@ -76,12 +76,12 @@ class RecipesFragment : Fragment() {
                 )
 
                 //Inform the ViewModel navigation is done to avoid triggering multiple events
-                mRecipesViewModel!!.displayRecipeDetailsComplete()
+                mRecipesViewModel.displayRecipeDetailsComplete()
             }
         })
     }
 
     private fun onRecipeClick(recipe: Recipe) {
-        mRecipesViewModel!!.displayRecipeDetails(recipe)
+        mRecipesViewModel.displayRecipeDetails(recipe)
     }
 }

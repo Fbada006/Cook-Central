@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,6 +19,7 @@ import com.disruption.cookcentral.models.Ingredients
 import com.disruption.cookcentral.models.Recipe
 import com.like.LikeButton
 import com.like.OnLikeListener
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 /**
@@ -29,7 +29,7 @@ class DetailsFragment : Fragment() {
     private lateinit var mBinding: FragmentDetailsBinding
     private var mLikeButton: LikeButton? = null
     private var mRecipe: Recipe? = null
-    private var mDetailsViewModel: DetailsViewModel? = null
+    private val mDetailsViewModel: DetailsViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,8 +42,8 @@ class DetailsFragment : Fragment() {
             setUpViews(mRecipe!!)
             setUpIngredientsRecyclerViews(mRecipe!!)
             setUpStepsRecyclerViews(mRecipe!!)
-            val factory = DetailsViewModelFactory(requireActivity().application)
-            mDetailsViewModel = ViewModelProvider(this, factory).get(DetailsViewModel::class.java)
+            //val factory = DetailsViewModelFactory(requireActivity().application)
+            //mDetailsViewModel = ViewModelProvider(this, factory).get(DetailsViewModel::class.java)
             setUpFavsListener()
             observeLikedState()
         }
@@ -102,7 +102,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun observeLikedState() {
-        mDetailsViewModel!!.isRecipeInFavs(mRecipe!!.id).observe(viewLifecycleOwner, Observer { recipe: CachedRecipe? ->
+        mDetailsViewModel.isRecipeInFavs(mRecipe!!.id).observe(viewLifecycleOwner, Observer { recipe: CachedRecipe? ->
             mLikeButton!!.isLiked = recipe != null
         })
     }
@@ -123,12 +123,12 @@ class DetailsFragment : Fragment() {
 
         mLikeButton!!.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
-                mDetailsViewModel!!.insertRecipeToFavourites(finalCachedRecipe!!)
+                mDetailsViewModel.insertRecipeToFavourites(finalCachedRecipe!!)
                 Toast.makeText(context, getString(R.string.add_to_favs), Toast.LENGTH_SHORT).show()
             }
 
             override fun unLiked(likeButton: LikeButton) {
-                mDetailsViewModel!!.deleteRecipeFromFavourites(finalCachedRecipe!!)
+                mDetailsViewModel.deleteRecipeFromFavourites(finalCachedRecipe!!)
                 Toast.makeText(context, getString(R.string.remove_from_favs), Toast.LENGTH_SHORT).show()
             }
         })

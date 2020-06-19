@@ -15,7 +15,9 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.Executors
 
-class RecipeRepository(private val mRecipeDao: RecipeDao) {
+class RecipeRepository(recipeDatabase: RecipeDatabase) {
+
+    private val mRecipeDao = recipeDatabase.recipeDao()
 
     fun loadRecipeById(recipeId: Int): LiveData<CachedRecipe> {
         return mRecipeDao.loadRecipeById(recipeId)
