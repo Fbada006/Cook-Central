@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "866658200656",
+    "firebase_url": "https://cookcentralfree.firebaseio.com",
+    "project_id": "cookcentralfree",
+    "storage_bucket": "cookcentralfree.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866658200656:android:a974e60d8ae0f4aa5bb555",
+        "android_client_info": {
+          "package_name": "com.disruption.cookcentral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866658200656-4d459k5oj8s7j98slsts7s88977at0c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxaKfQbJRDJOOg2KhhLkoMdyQI3eR9kVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866658200656-4d459k5oj8s7j98slsts7s88977at0c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
